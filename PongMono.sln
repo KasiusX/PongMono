@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PongMono", "PongMono\PongMono.csproj", "{B1336046-4CFE-442B-9812-3D6D6C8DABD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1336046-4CFE-442B-9812-3D6D6C8DABD6}.Debug|x86.ActiveCfg = Debug|x86
+		{B1336046-4CFE-442B-9812-3D6D6C8DABD6}.Debug|x86.Build.0 = Debug|x86
+		{B1336046-4CFE-442B-9812-3D6D6C8DABD6}.Release|x86.ActiveCfg = Release|x86
+		{B1336046-4CFE-442B-9812-3D6D6C8DABD6}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4F913D9-D0D9-440D-8657-F33D70CCE773}
+	EndGlobalSection
+EndGlobal
