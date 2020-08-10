@@ -17,8 +17,8 @@ namespace PongMono
         const int playerStartingSpeed = 10;
         const int playerSpaceFromEdge = 20;
 
-        const int ballWidth = 30;
-        const int ballHeight = 30;
+        const int ballWidth = 50;
+        const int ballHeight = 50;
         const int ballHorizontalSpeedMin = 10;
         const int ballHorizontalSpeedMax = 20;
         const int ballVerticalSpeedMin = 15;
@@ -26,7 +26,8 @@ namespace PongMono
             
 
         Texture2D background_sprite;
-        Texture2D player_sprite;
+        Texture2D firstPlayer_sprite;
+        Texture2D secondPlayer_sprite;
         Texture2D ball_sprite;
         SpriteFont game_font;
 
@@ -55,7 +56,8 @@ namespace PongMono
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background_sprite = Content.Load<Texture2D>("background_sprite");
-            player_sprite = Content.Load<Texture2D>("player_sprite");
+            firstPlayer_sprite = Content.Load<Texture2D>("firstplayer_sprite");
+            secondPlayer_sprite = Content.Load<Texture2D>("secondplayer_sprite");
             game_font = Content.Load<SpriteFont>("game_font");
             ball_sprite = Content.Load<Texture2D>("ball_sprite");
         }
@@ -93,8 +95,8 @@ namespace PongMono
             spriteBatch.Begin();
 
             spriteBatch.Draw(background_sprite, new Rectangle(0,0,graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight), Color.White);
-            spriteBatch.Draw(player_sprite, firstPlayer.ConvertPlayerToRectangle(),Color.White);
-            spriteBatch.Draw(player_sprite, secondPlayer.ConvertPlayerToRectangle(), Color.White);
+            spriteBatch.Draw(firstPlayer_sprite, firstPlayer.ConvertPlayerToRectangle(),Color.White);
+            spriteBatch.Draw(secondPlayer_sprite, secondPlayer.ConvertPlayerToRectangle(), Color.White);
             spriteBatch.Draw(ball_sprite, ball.ConvertPlayerToRectangle(), Color.White);
 
             spriteBatch.End();

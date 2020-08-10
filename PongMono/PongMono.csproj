@@ -63,8 +63,9 @@
     <None Include="app.manifest" />
     <None Include="Content\background_sprite.xnb" />
     <None Include="Content\ball_sprite.xnb" />
+    <None Include="Content\firstplayer_sprite.xnb" />
     <None Include="Content\game_font.xnb" />
-    <None Include="Content\player_sprite.xnb" />
+    <None Include="Content\secondplayer_sprite.xnb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PongMonoLibrary\PongMonoLibrary.csproj">
