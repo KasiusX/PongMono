@@ -1,83 +1,146 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PongMonoLibrary;
+using System.CodeDom;
 
 namespace PongMono
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+    
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        const int playerWidth = 30;
+        const int playerHeight = 150;
+        const int playerStartingSpeed = 10;
+        const int playerSpaceFromEdge = 20;
+
+        const int ballWidth = 30;
+        const int ballHeight = 30;
+        const int ballHorizontalSpeedMin = 10;
+        const int ballHorizontalSpeedMax = 20;
+        const int ballVerticalSpeedMin = 15;
+        const int ballVerticalSpeedMax = 25;
+            
+
+        Texture2D background_sprite;
+        Texture2D player_sprite;
+        Texture2D ball_sprite;
+        SpriteFont game_font;
+
+        PlayerModel firstPlayer;
+        PlayerModel secondPlayer;
+
+        BallModel ball;
+
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = 1250;
+            graphics.PreferredBackBufferHeight = 750;
+            SetStartingValues();
+            IsMouseVisible = true;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
+            base.Initialize();            
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            background_sprite = Content.Load<Texture2D>("background_sprite");
+            player_sprite = Content.Load<Texture2D>("player_sprite");
+            game_font = Content.Load<SpriteFont>("game_font");
+            ball_sprite = Content.Load<Texture2D>("ball_sprite");
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.W) && firstPlayer.Y > 0)
+            {
+                firstPlayer.Y -= firstPlayer.Speed;
+            }
+            if (kState.IsKeyDown(Keys.S) && firstPlayer.Y + firstPlayer.Height < graphics.PreferredBackBufferHeight)
+            {
+                firstPlayer.Y += firstPlayer.Speed;
+            }
+            if (kState.IsKeyDown(Keys.Up)&& secondPlayer.Y > 0)
+            {
+                secondPlayer.Y -= secondPlayer.Speed;
+            }
+            if (kState.IsKeyDown(Keys.Down)  && secondPlayer.Y + secondPlayer.Height < graphics.PreferredBackBufferHeight)
+            {
+                secondPlayer.Y += secondPlayer.Speed;
+            }
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
 
+            spriteBatch.Draw(background_sprite, new Rectangle(0,0,graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight), Color.White);
+            spriteBatch.Draw(player_sprite, firstPlayer.ConvertPlayerToRectangle(),Color.White);
+            spriteBatch.Draw(player_sprite, secondPlayer.ConvertPlayerToRectangle(), Color.White);
+            spriteBatch.Draw(ball_sprite, ball.ConvertPlayerToRectangle(), Color.White);
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        private void SetStartingValues()
+        {
+            int windowWidth = graphics.PreferredBackBufferWidth;
+            int windowHeight = graphics.PreferredBackBufferHeight;
+
+            int playerStartingY = windowHeight / 2 - playerHeight / 2;
+            int firstPlayerStartingX = playerSpaceFromEdge;
+            int secondPlayerStartingX = windowWidth - playerSpaceFromEdge - playerWidth;
+
+            firstPlayer = new PlayerModel
+            {
+                Speed = playerStartingSpeed,
+                X = firstPlayerStartingX,
+                Y = playerStartingY,
+                Width = playerWidth,
+                Height = playerHeight
+            };
+
+            secondPlayer = new PlayerModel
+            {
+                Speed = playerStartingSpeed,
+                X = secondPlayerStartingX,
+                Y = playerStartingY,
+                Width = playerWidth,
+                Height = playerHeight
+            };
+
+            ball = new BallModel
+            {
+                X = windowWidth / 2 - ballWidth /2,
+                Y = windowHeight /2 - ballHeight /2,
+                Width = ballWidth,
+                Height = ballHeight,
+                SpeedHorizontalMin = ballHorizontalSpeedMin,
+                SpeedHorizontalMax = ballHorizontalSpeedMax,
+                SpeedVerticalMin = ballVerticalSpeedMin,
+                SpeedVerticalMax = ballVerticalSpeedMax
+            };
+        }
+
+        
     }
 }
