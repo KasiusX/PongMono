@@ -18,5 +18,8 @@ namespace PongMonoLibrary
         public int SpeedVertical { get; set; }
         public int SpeedVerticalMin { get; set; }
         public int SpeedVerticalMax { get; set; }
+
+        public LeftRight LeftRightValue { get; set; }
+        public UpDown UpDownValue { get; set; }
     }
 }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PongMonoLibrary
 {
-    internal enum UpDown
+    public enum UpDown
     {
         Up,
         Down
     }
-    internal enum LeftRight
+    public enum LeftRight
     {
         Left,
         Right

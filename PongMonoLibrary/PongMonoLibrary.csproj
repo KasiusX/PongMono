@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,9 +44,12 @@
   <ItemGroup>
     <Compile Include="BallModel.cs" />
     <Compile Include="BallMovementManager.cs" />
+    <Compile Include="ColisionManager.cs" />
+    <Compile Include="DrawingHelper.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IRectangleConvertable.cs" />
     <Compile Include="PlayerModel.cs" />
+    <Compile Include="PlayerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,9 +8,7 @@ namespace PongMonoLibrary
 {
     public class BallMovementManager
     {
-        BallModel ball;
-        LeftRight leftRight;
-        UpDown upDown;
+        BallModel ball;        
         public BallMovementManager(BallModel ball)
         {
             this.ball = ball;
@@ -22,14 +20,14 @@ namespace PongMonoLibrary
             Random random = new Random();
             int left = random.Next(0,2);
             if (left == 0)
-                leftRight = LeftRight.Left;
+                ball.LeftRightValue= LeftRight.Left;
             else
-                leftRight = LeftRight.Right;
+                ball.LeftRightValue = LeftRight.Right;
             int up = random.Next(0,2);
             if (up == 0)
-                upDown = UpDown.Up;
+                ball.UpDownValue = UpDown.Up;
             else
-                upDown = UpDown.Down;
+                ball.UpDownValue = UpDown.Down;
 
             ball.SpeedVertical = random.Next(ball.SpeedVerticalMin, ball.SpeedVerticalMax + 1);
             ball.SpeedHorizontal = random.Next(ball.SpeedHorizontalMin, ball.SpeedHorizontalMax + 1);
@@ -37,14 +35,14 @@ namespace PongMonoLibrary
 
         public void MakeMove()
         {
-            if (leftRight == LeftRight.Right)
+            if (ball.LeftRightValue == LeftRight.Right)
                 ball.X += ball.SpeedHorizontal;
-            else if (leftRight == LeftRight.Left)
+            else if (ball.LeftRightValue == LeftRight.Left)
                 ball.X -= ball.SpeedHorizontal;
 
-            if (upDown == UpDown.Down)
+            if (ball.UpDownValue == UpDown.Down)
                 ball.Y += ball.SpeedVertical;
-            else if (upDown == UpDown.Up)
+            else if (ball.UpDownValue == UpDown.Up)
                 ball.Y -= ball.SpeedVertical;
         }
     }

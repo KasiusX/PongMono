@@ -19,10 +19,10 @@ namespace PongMono
 
         const int ballWidth = 50;
         const int ballHeight = 50;
-        const int ballHorizontalSpeedMin = 2;
-        const int ballHorizontalSpeedMax = 4;
-        const int ballVerticalSpeedMin = 3;
-        const int ballVerticalSpeedMax = 6;
+        const int ballHorizontalSpeedMin = 5;
+        const int ballHorizontalSpeedMax = 9;
+        const int ballVerticalSpeedMin = 8;
+        const int ballVerticalSpeedMax = 15;
             
 
         Texture2D background_sprite;
@@ -37,6 +37,8 @@ namespace PongMono
         BallModel ball;
 
         BallMovementManager ballManager;
+        ColisionManager colisionManager;
+        PlayerManager playerManager;
 
         
         public Game1()
@@ -47,6 +49,8 @@ namespace PongMono
             graphics.PreferredBackBufferHeight = 750;
             SetStartingValues();
             ballManager = new BallMovementManager(ball);
+            colisionManager = new ColisionManager(firstPlayer, secondPlayer, ball, graphics);
+            playerManager = new PlayerManager(firstPlayer, secondPlayer, graphics);
             IsMouseVisible = true;
         }
 
@@ -72,7 +76,9 @@ namespace PongMono
 
         protected override void Update(GameTime gameTime)
         {
-            MovePlayer();
+            colisionManager.CheckForCollision();
+
+            playerManager.MovePlayer();
 
             ballManager.MakeMove();
             base.Update(gameTime);
@@ -132,26 +138,7 @@ namespace PongMono
             };
         }
 
-        private void MovePlayer()
-        {
-            KeyboardState kState = Keyboard.GetState();
-            if (kState.IsKeyDown(Keys.W) && firstPlayer.Y > 0)
-            {
-                firstPlayer.Y -= firstPlayer.Speed;
-            }
-            if (kState.IsKeyDown(Keys.S) && firstPlayer.Y + firstPlayer.Height < graphics.PreferredBackBufferHeight)
-            {
-                firstPlayer.Y += firstPlayer.Speed;
-            }
-            if (kState.IsKeyDown(Keys.Up) && secondPlayer.Y > 0)
-            {
-                secondPlayer.Y -= secondPlayer.Speed;
-            }
-            if (kState.IsKeyDown(Keys.Down) && secondPlayer.Y + secondPlayer.Height < graphics.PreferredBackBufferHeight)
-            {
-                secondPlayer.Y += secondPlayer.Speed;
-            }
-        }
+        
 
         
     }
