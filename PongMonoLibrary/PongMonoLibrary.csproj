@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BallModel.cs" />
+    <Compile Include="BallMovementManager.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="IRectangleConvertable.cs" />
     <Compile Include="PlayerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

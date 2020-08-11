@@ -19,10 +19,10 @@ namespace PongMono
 
         const int ballWidth = 50;
         const int ballHeight = 50;
-        const int ballHorizontalSpeedMin = 10;
-        const int ballHorizontalSpeedMax = 20;
-        const int ballVerticalSpeedMin = 15;
-        const int ballVerticalSpeedMax = 25;
+        const int ballHorizontalSpeedMin = 2;
+        const int ballHorizontalSpeedMax = 4;
+        const int ballVerticalSpeedMin = 3;
+        const int ballVerticalSpeedMax = 6;
             
 
         Texture2D background_sprite;
@@ -36,6 +36,8 @@ namespace PongMono
 
         BallModel ball;
 
+        BallMovementManager ballManager;
+
         
         public Game1()
         {
@@ -44,6 +46,7 @@ namespace PongMono
             graphics.PreferredBackBufferWidth = 1250;
             graphics.PreferredBackBufferHeight = 750;
             SetStartingValues();
+            ballManager = new BallMovementManager(ball);
             IsMouseVisible = true;
         }
 
@@ -69,8 +72,9 @@ namespace PongMono
 
         protected override void Update(GameTime gameTime)
         {
-            CheckForPlayerMovement();
+            MovePlayer();
 
+            ballManager.MakeMove();
             base.Update(gameTime);
         }
 
@@ -80,9 +84,9 @@ namespace PongMono
             spriteBatch.Begin();
 
             spriteBatch.Draw(background_sprite, new Rectangle(0,0,graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight), Color.White);
-            spriteBatch.Draw(firstPlayer_sprite, firstPlayer.ConvertPlayerToRectangle(),Color.White);
-            spriteBatch.Draw(secondPlayer_sprite, secondPlayer.ConvertPlayerToRectangle(), Color.White);
-            spriteBatch.Draw(ball_sprite, ball.ConvertPlayerToRectangle(), Color.White);
+            spriteBatch.Draw(firstPlayer_sprite, firstPlayer.ConvertToRectangle(),Color.White);
+            spriteBatch.Draw(secondPlayer_sprite, secondPlayer.ConvertToRectangle(), Color.White);
+            spriteBatch.Draw(ball_sprite, ball.ConvertToRectangle(), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -128,7 +132,7 @@ namespace PongMono
             };
         }
 
-        private void CheckForPlayerMovement()
+        private void MovePlayer()
         {
             KeyboardState kState = Keyboard.GetState();
             if (kState.IsKeyDown(Keys.W) && firstPlayer.Y > 0)

@@ -10,7 +10,7 @@ namespace PongMono
 {
     public static class DrawingHelper
     {
-        public static Rectangle ConvertPlayerToRectangle(this IRectangleConvertable player)
+        public static Rectangle ConvertToRectangle(this IRectangleConvertable player)
         {
             Rectangle output = new Rectangle();
             output.X = player.X;
