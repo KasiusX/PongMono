@@ -69,23 +69,8 @@ namespace PongMono
 
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState kState = Keyboard.GetState();
-            if (kState.IsKeyDown(Keys.W) && firstPlayer.Y > 0)
-            {
-                firstPlayer.Y -= firstPlayer.Speed;
-            }
-            if (kState.IsKeyDown(Keys.S) && firstPlayer.Y + firstPlayer.Height < graphics.PreferredBackBufferHeight)
-            {
-                firstPlayer.Y += firstPlayer.Speed;
-            }
-            if (kState.IsKeyDown(Keys.Up)&& secondPlayer.Y > 0)
-            {
-                secondPlayer.Y -= secondPlayer.Speed;
-            }
-            if (kState.IsKeyDown(Keys.Down)  && secondPlayer.Y + secondPlayer.Height < graphics.PreferredBackBufferHeight)
-            {
-                secondPlayer.Y += secondPlayer.Speed;
-            }
+            CheckForPlayerMovement();
+
             base.Update(gameTime);
         }
 
@@ -141,6 +126,27 @@ namespace PongMono
                 SpeedVerticalMin = ballVerticalSpeedMin,
                 SpeedVerticalMax = ballVerticalSpeedMax
             };
+        }
+
+        private void CheckForPlayerMovement()
+        {
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.W) && firstPlayer.Y > 0)
+            {
+                firstPlayer.Y -= firstPlayer.Speed;
+            }
+            if (kState.IsKeyDown(Keys.S) && firstPlayer.Y + firstPlayer.Height < graphics.PreferredBackBufferHeight)
+            {
+                firstPlayer.Y += firstPlayer.Speed;
+            }
+            if (kState.IsKeyDown(Keys.Up) && secondPlayer.Y > 0)
+            {
+                secondPlayer.Y -= secondPlayer.Speed;
+            }
+            if (kState.IsKeyDown(Keys.Down) && secondPlayer.Y + secondPlayer.Height < graphics.PreferredBackBufferHeight)
+            {
+                secondPlayer.Y += secondPlayer.Speed;
+            }
         }
 
         
