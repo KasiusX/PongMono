@@ -63,7 +63,7 @@
     <None Include="Content\background_sprite.xnb" />
     <None Include="Content\ball_sprite.xnb" />
     <None Include="Content\firstplayer_sprite.xnb" />
-    <None Include="Content\game_font.xnb" />
+    <None Include="Content\game_font.spritefont" />
     <None Include="Content\secondplayer_sprite.xnb" />
   </ItemGroup>
   <ItemGroup>

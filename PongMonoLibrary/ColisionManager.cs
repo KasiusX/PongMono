@@ -25,11 +25,31 @@ namespace PongMonoLibrary
         }
 
         public void CheckForCollision()
-        {            
+        {
             if (Rectangle.Intersect(firstPlayer.ConvertToRectangle(), ball.ConvertToRectangle()) != new Rectangle())
-                ball.LeftRightValue = LeftRight.Right;
+            {
+                if(ball.X >= firstPlayer.X + firstPlayer.Width / 4)
+                   ball.LeftRightValue = LeftRight.Right;            
+                else
+                {
+                    if (ball.UpDownValue == UpDown.Down)
+                        ball.UpDownValue = UpDown.Up;
+                    else
+                        ball.UpDownValue = UpDown.Down;
+                }
+            }
             if (Rectangle.Intersect(secondPlayer.ConvertToRectangle(), ball.ConvertToRectangle()) != new Rectangle())
-                ball.LeftRightValue = LeftRight.Left;
+            {
+                if(ball.X + ball.Width <= secondPlayer.X + secondPlayer.Width /4 )
+                    ball.LeftRightValue = LeftRight.Left;
+                else
+                {
+                    if (ball.UpDownValue == UpDown.Down)
+                        ball.UpDownValue = UpDown.Up;
+                    else
+                        ball.UpDownValue = UpDown.Down;
+                }
+            }
             if (ball.Y <= 0)
                 ball.UpDownValue = UpDown.Down;
             if (ball.Y + ball.Height >= graphics.PreferredBackBufferHeight)

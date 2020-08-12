@@ -16,4 +16,10 @@ namespace PongMonoLibrary
         Left,
         Right
     }
+
+    public enum WhoScored
+    {
+        FirstPlayer,
+        SecondPlayer
+    }
 }

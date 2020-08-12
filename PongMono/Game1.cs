@@ -3,11 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PongMonoLibrary;
 using System.CodeDom;
+using System.Threading;
 
 namespace PongMono
 {
     
-    public class Game1 : Game
+    public class Game1 : Game, IPlayerScoredRequestor
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -15,7 +16,7 @@ namespace PongMono
         const int playerWidth = 30;
         const int playerHeight = 150;
         const int playerStartingSpeed = 10;
-        const int playerSpaceFromEdge = 20;
+        const int playerSpaceFromEdge = 40;
 
         const int ballWidth = 50;
         const int ballHeight = 50;
@@ -23,6 +24,8 @@ namespace PongMono
         const int ballHorizontalSpeedMax = 9;
         const int ballVerticalSpeedMin = 8;
         const int ballVerticalSpeedMax = 15;
+
+        const int pointsToWin = 2;
             
 
         Texture2D background_sprite;
@@ -39,8 +42,15 @@ namespace PongMono
         BallMovementManager ballManager;
         ColisionManager colisionManager;
         PlayerManager playerManager;
+        EndManager endManager;
 
-        
+        WhoScored whoScored;
+
+        bool play = false;
+
+        bool isWinner = false;
+        string winnerText;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -51,6 +61,7 @@ namespace PongMono
             ballManager = new BallMovementManager(ball);
             colisionManager = new ColisionManager(firstPlayer, secondPlayer, ball, graphics);
             playerManager = new PlayerManager(firstPlayer, secondPlayer, graphics);
+            endManager = new EndManager(firstPlayer, secondPlayer,ball, graphics, this);
             IsMouseVisible = true;
         }
 
@@ -76,11 +87,23 @@ namespace PongMono
 
         protected override void Update(GameTime gameTime)
         {
-            colisionManager.CheckForCollision();
+            //if (!isWinner)
+            {
+                if (!play)
+                {
+                    CheckForStart();
+                }
+                if (play)
+                {
+                    colisionManager.CheckForCollision();
 
-            playerManager.MovePlayer();
+                    playerManager.MovePlayer();
 
-            ballManager.MakeMove();
+                    ballManager.MakeMove();
+
+                    endManager.CheckIfMissed();
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -88,11 +111,19 @@ namespace PongMono
         {
 
             spriteBatch.Begin();
+            
+            
+                spriteBatch.Draw(background_sprite, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White);
+                spriteBatch.Draw(firstPlayer_sprite, firstPlayer.ConvertToRectangle(), Color.White);
+                spriteBatch.Draw(secondPlayer_sprite, secondPlayer.ConvertToRectangle(), Color.White);
+                spriteBatch.Draw(ball_sprite, ball.ConvertToRectangle(), Color.White);
+                spriteBatch.DrawString(game_font, firstPlayer.Score.ToString(), new Vector2(graphics.PreferredBackBufferWidth / 3, graphics.PreferredBackBufferHeight / 12), Color.White);
+                spriteBatch.DrawString(game_font, secondPlayer.Score.ToString(), new Vector2(graphics.PreferredBackBufferWidth / 3 * 2, graphics.PreferredBackBufferHeight / 12), Color.White);
 
-            spriteBatch.Draw(background_sprite, new Rectangle(0,0,graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight), Color.White);
-            spriteBatch.Draw(firstPlayer_sprite, firstPlayer.ConvertToRectangle(),Color.White);
-            spriteBatch.Draw(secondPlayer_sprite, secondPlayer.ConvertToRectangle(), Color.White);
-            spriteBatch.Draw(ball_sprite, ball.ConvertToRectangle(), Color.White);
+            if (isWinner)
+            {
+                spriteBatch.DrawString(game_font, winnerText, new Vector2(graphics.PreferredBackBufferWidth / 3, graphics.PreferredBackBufferHeight / 4), Color.White);                
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -138,8 +169,63 @@ namespace PongMono
             };
         }
 
-        
+        public void Stop(WhoScored whoScored)
+        {
+            this.whoScored = whoScored;
+            if(whoScored == WhoScored.FirstPlayer)
+            {
+                firstPlayer.Score++;
+                SetStartingPositions();
+                play = false;
+            }
+            else if (whoScored == WhoScored.SecondPlayer)
+            {
+                secondPlayer.Score++;
+                SetStartingPositions();
+                play = false;
+            }
+            if (firstPlayer.Score == pointsToWin || secondPlayer.Score == pointsToWin)
+                SomeoneWon(whoScored);  
+        }
 
-        
+        private void CheckForStart()
+        {
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.Enter))
+            {
+                ballManager.GenerateRandomStart(whoScored);
+                play = true;
+                isWinner = false;
+            }
+        }
+
+        private void SetStartingPositions()
+        {
+            
+            int playerStartingY = graphics.PreferredBackBufferHeight / 2 - playerHeight / 2;
+            int firstPlayerStartingX = playerSpaceFromEdge;
+            int secondPlayerStartingX = graphics.PreferredBackBufferWidth - playerSpaceFromEdge - playerWidth;
+
+            firstPlayer.X = firstPlayerStartingX;
+            firstPlayer.Y = playerStartingY;
+
+            secondPlayer.X = secondPlayerStartingX;
+            secondPlayer.Y = playerStartingY;
+
+            ball.X = graphics.PreferredBackBufferWidth / 2 - ballWidth / 2;
+            ball.Y = graphics.PreferredBackBufferHeight / 2 - ballHeight / 2;
+        }
+
+        private void SomeoneWon(WhoScored whoScored)
+        {
+            isWinner = true;
+            if (whoScored == WhoScored.FirstPlayer)
+                winnerText = "FIRST PLAYER WON";
+            else
+                winnerText = "SECOND PLAYER WON";
+
+            firstPlayer.Score = 0;
+            secondPlayer.Score = 0;
+        }
     }
 }

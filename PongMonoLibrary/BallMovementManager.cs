@@ -12,10 +12,9 @@ namespace PongMonoLibrary
         public BallMovementManager(BallModel ball)
         {
             this.ball = ball;
-            GenerateRandomStart();
         }
 
-        public void GenerateRandomStart()
+        public void GenerateRandomStart(WhoScored whoScored)
         {
             Random random = new Random();
             int left = random.Next(0,2);
@@ -28,6 +27,11 @@ namespace PongMonoLibrary
                 ball.UpDownValue = UpDown.Up;
             else
                 ball.UpDownValue = UpDown.Down;
+
+            if (whoScored == WhoScored.FirstPlayer)
+                ball.LeftRightValue = LeftRight.Left;
+            if (whoScored == WhoScored.SecondPlayer)
+                ball.LeftRightValue = LeftRight.Right;
 
             ball.SpeedVertical = random.Next(ball.SpeedVerticalMin, ball.SpeedVerticalMax + 1);
             ball.SpeedHorizontal = random.Next(ball.SpeedHorizontalMin, ball.SpeedHorizontalMax + 1);
