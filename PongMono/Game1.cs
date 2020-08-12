@@ -20,12 +20,12 @@ namespace PongMono
 
         const int ballWidth = 50;
         const int ballHeight = 50;
-        const int ballHorizontalSpeedMin = 5;
+        const int ballHorizontalSpeedMin = 9;
         const int ballHorizontalSpeedMax = 9;
-        const int ballVerticalSpeedMin = 8;
+        const int ballVerticalSpeedMin = 15;
         const int ballVerticalSpeedMax = 15;
 
-        const int pointsToWin = 2;
+        const int pointsToWin = 5;
             
 
         Texture2D background_sprite;
