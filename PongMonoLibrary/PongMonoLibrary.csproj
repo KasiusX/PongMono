@@ -42,16 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BallModel.cs" />
-    <Compile Include="BallMovementManager.cs" />
-    <Compile Include="ColisionManager.cs" />
+    <Compile Include="Models\BallModel.cs" />
+    <Compile Include="Manageers\BallMovementManager.cs" />
+    <Compile Include="Manageers\ColisionManager.cs" />
     <Compile Include="DrawingHelper.cs" />
-    <Compile Include="EndManager.cs" />
+    <Compile Include="Manageers\EndManager.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="IPlayerScoredRequestor.cs" />
-    <Compile Include="IRectangleConvertable.cs" />
-    <Compile Include="PlayerModel.cs" />
-    <Compile Include="PlayerManager.cs" />
+    <Compile Include="Interfaces\IPlayerScoredRequestor.cs" />
+    <Compile Include="Interfaces\IRectangleConvertable.cs" />
+    <Compile Include="Models\PlayerModel.cs" />
+    <Compile Include="Manageers\PlayerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -87,22 +87,19 @@ namespace PongMono
 
         protected override void Update(GameTime gameTime)
         {
-            //if (!isWinner)
+            if (!play)
             {
-                if (!play)
-                {
-                    CheckForStart();
-                }
-                if (play)
-                {
-                    colisionManager.CheckForCollision();
+                CheckForStart();
+            }
+            if (play)
+            {
+                colisionManager.CheckForCollision();
 
-                    playerManager.MovePlayer();
+                playerManager.MovePlayer();
 
-                    ballManager.MakeMove();
+                ballManager.MakeMove();
 
-                    endManager.CheckIfMissed();
-                }
+                endManager.CheckIfMissed();
             }
             base.Update(gameTime);
         }
@@ -113,12 +110,12 @@ namespace PongMono
             spriteBatch.Begin();
             
             
-                spriteBatch.Draw(background_sprite, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White);
-                spriteBatch.Draw(firstPlayer_sprite, firstPlayer.ConvertToRectangle(), Color.White);
-                spriteBatch.Draw(secondPlayer_sprite, secondPlayer.ConvertToRectangle(), Color.White);
-                spriteBatch.Draw(ball_sprite, ball.ConvertToRectangle(), Color.White);
-                spriteBatch.DrawString(game_font, firstPlayer.Score.ToString(), new Vector2(graphics.PreferredBackBufferWidth / 3, graphics.PreferredBackBufferHeight / 12), Color.White);
-                spriteBatch.DrawString(game_font, secondPlayer.Score.ToString(), new Vector2(graphics.PreferredBackBufferWidth / 3 * 2, graphics.PreferredBackBufferHeight / 12), Color.White);
+            spriteBatch.Draw(background_sprite, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White);
+            spriteBatch.Draw(firstPlayer_sprite, firstPlayer.ConvertToRectangle(), Color.White);
+            spriteBatch.Draw(secondPlayer_sprite, secondPlayer.ConvertToRectangle(), Color.White);
+            spriteBatch.Draw(ball_sprite, ball.ConvertToRectangle(), Color.White);
+            spriteBatch.DrawString(game_font, firstPlayer.Score.ToString(), new Vector2(graphics.PreferredBackBufferWidth / 3, graphics.PreferredBackBufferHeight / 12), Color.White);
+            spriteBatch.DrawString(game_font, secondPlayer.Score.ToString(), new Vector2(graphics.PreferredBackBufferWidth / 3 * 2, graphics.PreferredBackBufferHeight / 12), Color.White);
 
             if (isWinner)
             {
